@@ -8,7 +8,7 @@ RewriteRule "(^|/)\.(?!well-known/)" - [F,L]
 # Block direct .env access
 RewriteRule (^|/)\.env - [F,L,NC]
 
-# Route all non-existing files/folders to index.php
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.php [L]
+# Redirect requests to /public/ when not already there
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteRule ^$ public/ [R=302,L]
+RewriteRule (.*) public/$1 [R=302,L]
