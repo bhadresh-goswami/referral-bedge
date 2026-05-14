@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Refer & Earn $300 | Premium Referral Program</title>
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
   <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
 <body>
@@ -58,7 +59,7 @@
           <h2>Premium Referral Form</h2>
           <p class="form-subtitle">Share your details and submit your referral in one smooth step.</p>
 
-          <form class="referral-form" action="#" method="post" enctype="multipart/form-data" novalidate>
+          <form class="referral-form" action="/submit-referral" method="post" enctype="multipart/form-data" novalidate>
             <fieldset>
               <legend>Your Details</legend>
               <div class="form-grid">
@@ -120,6 +121,7 @@
     </div>
   </footer>
 
+  <script src="/assets/js/bootstrap.bundle.min.js"></script>
   <script src="/assets/js/app.js"></script>
 </body>
 </html>
