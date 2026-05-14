@@ -6,12 +6,11 @@ RewriteEngine On
 RewriteCond %{REQUEST_URI} !^/public/
 RewriteRule ^(.*)$ /public/$1 [R=302,L]
 
-# Protect hidden files
-<FilesMatch "^\.">
-    Require all denied
-</FilesMatch>
+# Protect hidden files (except .well-known)
+RewriteRule "(^|/)\.(?!well-known/)" - [F,L]
 
 # Block direct .env access
 <FilesMatch "^\.env">
-    Require all denied
+    Order allow,deny
+    Deny from all
 </FilesMatch>
