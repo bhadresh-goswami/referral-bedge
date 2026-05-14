@@ -1,0 +1,6 @@
+{
+  "name": "bedge/referral-system",
+  "require": {
+    "vlucas/phpdotenv": "*"
+  }
+}
