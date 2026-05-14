@@ -1,15 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+declare(strict_types=1);
 
-Route::get('/', function () {
-    return 'bEdge Referral System is running';
-});
+use App\Controllers\ReferralController;
+use App\Core\Router;
 
-Route::get('/thank-you', function () {
-    return 'Thank you for your referral';
-});
+/** @var Router $router */
 
-Route::post('/submit-referral', function () {
-    return 'Referral submit route ready';
-});
+$router->get('/', [ReferralController::class, 'index']);
+$router->post('/submit-referral', [ReferralController::class, 'submit']);
