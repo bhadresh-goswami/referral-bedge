@@ -22,6 +22,7 @@ class ReferralController extends Controller
 
     public function submit(): string
     {
+        header('Content-Type: application/json');
         $payload = [
             'your_name' => $this->sanitize($_POST['your_name'] ?? ''),
             'your_email' => $this->sanitize($_POST['your_email'] ?? ''),
@@ -43,7 +44,13 @@ class ReferralController extends Controller
             return json_encode(['success' => false, 'errors' => $errors], JSON_UNESCAPED_SLASHES) ?: '{"success":false}';
         }
 
-        $payload['resume_file'] = $this->storeUpload($_FILES['resume_file'] ?? null);
+        $uploadResult = $this->storeUpload($_FILES['resume_file'] ?? null);
+        if ($uploadResult === false) {
+            http_response_code(422);
+            return json_encode(['success' => false, 'errors' => ['resume_file' => 'Unable to store uploaded file.']], JSON_UNESCAPED_SLASHES) ?: '{"success":false}';
+        }
+
+        $payload['resume_file'] = $uploadResult;
 
         $saved = (new Referral())->insert($payload);
         if (!$saved) {
@@ -103,7 +110,7 @@ class ReferralController extends Controller
         return $errors;
     }
 
-    private function storeUpload(?array $upload): ?string
+    private function storeUpload(?array $upload): string|false|null
     {
         if ($upload === null || ($upload['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE) {
             return null;
@@ -121,6 +128,7 @@ class ReferralController extends Controller
             return $filename;
         }
 
-        return null;
+        return false;
     }
 }
+
