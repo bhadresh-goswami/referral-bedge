@@ -8,7 +8,11 @@ RewriteRule "(^|/)\.(?!well-known/)" - [F,L]
 # Block direct .env access
 RewriteRule (^|/)\.env - [F,L,NC]
 
-# Redirect requests to /public/ when not already there
+# Internally route requests to /public without changing URL
 RewriteCond %{REQUEST_URI} !^/public/
-RewriteRule ^$ public/ [R=302,L]
-RewriteRule (.*) public/$1 [R=302,L]
+RewriteCond %{DOCUMENT_ROOT}/public/$1 -f [OR]
+RewriteCond %{DOCUMENT_ROOT}/public/$1 -d
+RewriteRule ^(.*)$ /public/$1 [L]
+
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteRule ^(.*)$ /public/index.php [L]
