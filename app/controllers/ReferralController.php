@@ -133,7 +133,7 @@ class ReferralController extends Controller
         return $errors;
     }
 
-    private function storeUpload(?array $upload): ?string
+    private function storeUpload(?array $upload): string|false|null
     {
         if ($upload === null || ($upload['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE) {
             return null;
@@ -186,3 +186,4 @@ class ReferralController extends Controller
         file_put_contents($logDir . '/referral.log', $line, FILE_APPEND);
     }
 }
+
