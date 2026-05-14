@@ -2,6 +2,10 @@ Options -Indexes
 
 RewriteEngine On
 
+# Redirect all requests to /public
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteRule ^(.*)$ /public/$1 [R=302,L]
+
 # Protect hidden files
 <FilesMatch "^\.">
     Require all denied
@@ -11,8 +15,3 @@ RewriteEngine On
 <FilesMatch "^\.env">
     Require all denied
 </FilesMatch>
-
-# Route all non-existing files/folders to index.php
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.php [L]
