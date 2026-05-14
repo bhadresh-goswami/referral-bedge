@@ -8,9 +8,9 @@ RewriteEngine On
 </FilesMatch>
 
 # Block direct .env access
-<Files ".env">
+<FilesMatch "^\.env">
     Require all denied
-</Files>
+</FilesMatch>
 
 # Route all non-existing files/folders to index.php
 RewriteCond %{REQUEST_FILENAME} !-f
