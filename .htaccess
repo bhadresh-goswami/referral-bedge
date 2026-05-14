@@ -2,15 +2,13 @@ Options -Indexes
 
 RewriteEngine On
 
-# Redirect all requests to /public
-RewriteCond %{REQUEST_URI} !^/public/
-RewriteRule ^(.*)$ /public/$1 [R=302,L]
-
 # Protect hidden files (except .well-known)
 RewriteRule "(^|/)\.(?!well-known/)" - [F,L]
 
 # Block direct .env access
-<FilesMatch "^\.env">
-    Order allow,deny
-    Deny from all
-</FilesMatch>
+RewriteRule (^|/)\.env - [F,L,NC]
+
+# Redirect requests to /public/ when not already there
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteRule ^$ public/ [R=302,L]
+RewriteRule (.*) public/$1 [R=302,L]
