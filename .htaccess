@@ -1,0 +1,18 @@
+Options -Indexes
+
+RewriteEngine On
+
+# Protect hidden files (except .well-known)
+RewriteRule "(^|/)\.(?!well-known/)" - [F,L]
+
+# Block direct .env access
+RewriteRule (^|/)\.env - [F,L,NC]
+
+# Internally route requests to /public without changing URL
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteCond %{DOCUMENT_ROOT}/public/$1 -f [OR]
+RewriteCond %{DOCUMENT_ROOT}/public/$1 -d
+RewriteRule ^(.*)$ /public/$1 [L]
+
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteRule ^(.*)$ /public/index.php [L]
